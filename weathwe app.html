@@ -1,0 +1,112 @@
+<DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Weather App </title>
+     <link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+    <div class="card">
+        <div class="search">
+            <input type="text" placeholder="enter city name" spellcheck="false">
+            <button><img src ="images\search.png"></button>
+        </div>
+        <div class="error"></div>
+        <div class="weather"> 
+            <p>invalid city name</p>
+            
+            <img src="images\rain.png" class="weather-icon">
+            <h1 class="temp">22°c</h1>
+            <h2 class="city">Nellore</h2>
+            <div class="details">
+                <div class="col">
+                    <img src="images\humidity.png">
+                    <div>
+                        <p class="humidity">50%</p>
+                        <p>Humidity</p>
+                    </div>
+                </div>
+                <div class="col">
+                    <img src="images\wind.png">
+                    <div>
+                        <p class="Wind">15km/h</p>
+                        <p>Wind speed</p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    </div>
+
+
+<script>
+
+    const apiKey ="d830d98d6617eae68b8c30cb0a473c02";
+    const apiurl ="https://api.openweathermap.org/data/2.5/weather?units=metric&q=";
+
+    const searchbox = document.queryselector(".search input");
+    const searchBtn = document.queryselector(".search input");
+    const weathericon =document.queryselector(".weather-icon");
+    async function checkweather(city){
+        const response = await fetch(apiuurl+ city+' &appid=${apikey}');
+       if(response.status == 404){
+        document.queryselector(".error").style.display = "block";
+        document.queryselector(".weather").style.display = "none";
+       }else{
+
+        var data = await response.json();
+        
+
+        document.queryselector(".city").innerHTML = data.name;
+        document.queryselector(".temp").innerHTML =  math.round(data.main.temp) + "°c";
+        document.queryselector(".humidity").innerHTML = data.main.humidity + "%";
+        document.queryselector(".wind").innerHTML = data.wind.speed + "km/h";
+    
+        if(data.weather[0].main == "clouds"){
+            weathericon.src = "images/clouds.png"; 
+        }else if(data.weather[0].main == "clear"){
+            weathericon.src = "images/clear.png"; 
+        }else if(data.weather[0].main == "rain"){
+            weathericon.src = "images/rain.png"; 
+        }else if(data.weather[0].main == "drizzle"){
+            weathericon.src = "images/drizzle.png"; 
+        }else if(data.weather[0].main == "mist"){
+            weathericon.src = "images/mist.png"; 
+        } 
+        document.queryselector(".weather").style.display = "block";
+
+       }
+       
+        var data = await response.json();
+        
+
+        document.queryselector(".city").innerHTML = data.name;
+        document.queryselector(".temp").innerHTML =  math.round(data.main.temp) + "°c";
+        document.queryselector(".humidity").innerHTML = data.main.humidity + "%";
+        document.queryselector(".wind").innerHTML = data.wind.speed + "km/h";
+    
+        if(data.weather[0].main == "clouds"){
+            weathericon.src = "images/clouds.png"; 
+        }else if(data.weather[0].main == "clear"){
+            weathericon.src = "images/clear.png"; 
+        }else if(data.weather[0].main == "rain"){
+            weathericon.src = "images/rain.png"; 
+        }else if(data.weather[0].main == "drizzle"){
+            weathericon.src = "images/drizzle.png"; 
+        }else if(data.weather[0].main == "mist"){
+            weathericon.src = "images/mist.png"; 
+        } 
+        document.queryselector(".weather").style.display = "block";
+        document.queryselector(".error").style.display = "none";
+    }
+
+
+    searchBtn.addEventlistener("click", ()=>{
+        checkweather(searchbox.value);
+    })
+    checkweather();
+</script>
+
+</body>
+</html>
